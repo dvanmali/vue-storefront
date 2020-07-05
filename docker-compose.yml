@@ -1,14 +1,16 @@
-version: '2.0'
+version: '3.0'
 services:
   app:
     # image: divante/vue-storefront:latest
     build:
       context: .
       dockerfile: docker/vue-storefront/Dockerfile
+    container_name: vue-storefront_app
+    image: vue-storefront_app
     env_file: docker/vue-storefront/default.env
     environment:
       VS_ENV: dev
-    network_mode: host
+    # network_mode: host # This maps all container ports directly to network ports (overrides ports)
     volumes:
       - './babel.config.js:/var/www/babel.config.js'
       - './config:/var/www/config'
