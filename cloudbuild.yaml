@@ -1,0 +1,31 @@
+# The build steps for the Vue-Storefront API instance
+# This file performs steps to continuously deploy the app:
+#   - unit test
+#   - build image to cloud image
+#   - save image to container registry
+# The global variables:
+#   - Set up and link to GCP project by running 'gcp init' locally
+#   - Run 'gcloud projects list' to see available projects
+
+steps:
+  # This section runs the unit tests on the app
+  # - name: 'python:3.7-slim'
+  #   id: Test
+  #   entrypoint: /bin/sh
+  #   args:
+  #   - -c
+  #   - 'pip install flask && python test_app.py -v'
+
+  # This section builds the vue-storefront-app images
+  - name: 'docker/compose:1.25.5'
+    args: ['-f', 'docker-compose.yml', 'up', '-d']
+  
+  # This section tags the local images to our GCR tag
+  #   The PROJECT_ID and SHORT_SHA variables are automatically replaced by Cloud Build.
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', 'vue-storefront_app:latest', 'gcr.io/$PROJECT_ID/vue-storefront-app:$COMMIT_SHA']
+
+  # This section pushes the images to the Container Registry
+  #   The PROJECT_ID and SHORT_SHA variables are automatically replaced by Cloud Build.
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/vue-storefront-app:$COMMIT_SHA']
