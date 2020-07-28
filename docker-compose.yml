@@ -1,12 +1,11 @@
 version: '3.0'
 services:
   app:
-    # image: divante/vue-storefront:latest
     build:
       context: .
       dockerfile: docker/vue-storefront/Dockerfile
-    container_name: vue-storefront_app
-    image: vue-storefront_app
+    container_name: vue-storefront-app
+    image: revnite/vue-storefront-app # divante/vue-storefront:latest
     env_file: docker/vue-storefront/default.env
     environment:
       VS_ENV: dev

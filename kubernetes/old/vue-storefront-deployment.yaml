@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: vue-storefront
-        image: divante/vue-storefront:latest
+        image: revnite/vue-storefront:latest
         envFrom:
         - configMapRef:
             name: vue-storefront-config
@@ -63,7 +63,7 @@ spec:
       volumes:
       - name: code
         hostPath:
-          path: "/root/vue-storefront"
+          path: "/vue-storefront"
       - name: dist
         emptyDir:
           medium: Memory

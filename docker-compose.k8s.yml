@@ -1,0 +1,15 @@
+version: '3.0'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/vue-storefront/Dockerfile
+    container_name: vue-storefront-app
+    image: revnite/vue-storefront-app # divante/vue-storefront:latest
+    env_file: docker/vue-storefront/default.env
+    environment:
+      VS_ENV: dev
+    tmpfs:
+      - /var/www/dist
+    ports:
+      - '3000:3000'

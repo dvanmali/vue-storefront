@@ -1,0 +1,17 @@
+apiVersion: skaffold/v2beta5
+kind: Config
+metadata:
+  name: vue-storefront
+build:
+  artifacts:
+  - image: revnite/vue-storefront-app
+    context: .
+    docker:
+      dockerfile: docker/vue-storefront/Dockerfile
+#     sync:
+#         infer: 
+#         - "**/*"
+deploy:
+  kubectl:
+    manifests:
+    - kubernetes/*.yaml
